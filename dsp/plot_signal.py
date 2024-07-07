@@ -1,4 +1,4 @@
-def plot_sine_wave ( n , x_n ) :
+def plot_signal ( n , x_n ) :
     """
     Plot signal with the following parameters
     Parameters:
