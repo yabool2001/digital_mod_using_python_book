@@ -2,20 +2,22 @@ def generate_wave_signal ( sin , a , f , f_s , N , p_s , osr , depict ) :
     """
     Generate sine wave signal with the following parameters
     Parameters:
-    f : frequency of sine wave in Hertz
-
-    osr         oversampling rate (integer) for plot
+    sin         sinus or cosinus
+    a           amplitude
+    f           frequency of wave in Hertz
+    f_s         sampling frequency
+    N           the number of samples of the input sequence and the number of frequency points in the DFT output.
     p_s         desired phase shift in radians
-    N :         number of
+    osr         oversampling rate (integer) used for plot
     depict      plot the signal
     Returns:
-    ( t , g )   time base (t) and the signal g(t) as tuple
+    ( n , x_n ) time base (n) and the signal x(n) as tuple
     """
     
     import numpy as np
 
-    t_s = 1.0 / f_s  # Okres próbkowania
-    n = np.arange ( 0 , N * t_s , t_s ) # Wyznaczenie punktów próbkowania n
+    t_s = 1.0 / f_s  # sampling period
+    n = np.arange ( 0 , N * t_s , t_s ) # Sampling points generation
     print ( f"{n=}" )
 
     if ( sin ) :
