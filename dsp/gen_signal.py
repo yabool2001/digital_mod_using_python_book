@@ -53,6 +53,7 @@ def rect_pulse ( a , f_s , N , K , s , sym , depict ) :
     N           the number of samples of the input sequence and the number of frequency points in the DFT output.
     K           number of samples with amplitude value a
     s           desired K samples shift
+    sym         signal symmetry around 0  
     depict      plot the signal
     Returns:
     ( n , x_n ) time base (n) and the pulse x(n) as tuple

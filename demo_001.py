@@ -9,13 +9,13 @@ import dsp.gen_signal as gen_signal
 import dsp.ft as ft
 from dsp.plot_signal import plot_signal # import function
 
-N = 8
+N = 16
 f_s = 8000
 
-# ( t , x_t ) = gen_signal.wave ( 0 , 2 , 2000.0 , f_s , N , 1/2*np.pi , 10 , 1 ) #fi phase = 1 / 3 * np.pi #phase shift in radians
-# plot_signal ( t , x_t )
-( t , x_t ) = gen_signal.rect_pulse ( 1 , 10 , 9 , 3 , 0 , 0 , 0 ) #fi phase = 1 / 3 * np.pi #phase shift in radians
+( t , x_t ) = gen_signal.wave ( 1 , 1 , 2000.0 , f_s , N , 1/2*np.pi , 10 , 1 ) #fi phase = 1 / 3 * np.pi #phase shift in radians
 plot_signal ( t , x_t )
+# ( t , x_t ) = gen_signal.rect_pulse ( 1 , f_s , N , 3 , 0 , 0 , 0 ) #fi phase = 1 / 3 * np.pi #phase shift in radians
+# plot_signal ( t , x_t )
 # ( t , x_t ) = gen_signal.chirp ( 1 , 1500 , 1000 , 10 , 50 , 0 , 'linear' , True , 1 ) #fi phase = 1 / 3 * np.pi #phase shift in radians
 # plot_signal ( t , x_t )
 
