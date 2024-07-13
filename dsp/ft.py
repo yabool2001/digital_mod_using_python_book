@@ -15,14 +15,20 @@ def fft ( x_n , f_s , N , threshold = 1e-10 ) :
     import numpy as np
     import matplotlib.pyplot as plt
 
+    np.set_printoptions ( formatter = { "float_kind" : lambda x : "%g" % x } )
+
+    complex_ths = threshold
+
     X_m = fft ( x_n , N )
+    print ( f"{X_m=}")
+    X_m.real[np.abs ( X_m.real ) < threshold] = 0
+    X_m.imag[np.abs ( X_m.imag ) < threshold] = 0
+    print ( f"{X_m=}")
 
     X_m_mag = np.abs ( X_m ) / N
-    X_m_mag[np.abs ( X_m_mag ) < threshold] = 0
     print ( f"{X_m_mag=}")
 
-    X_m_phi = np.angle ( X_m_mag , deg = True )
-    X_m_phi[np.abs ( X_m_phi ) < threshold] = 0
+    X_m_phi = np.angle ( X_m , deg = True )
     print ( f"{X_m_phi=}")
 
     d_f = f_s / N
@@ -61,6 +67,7 @@ def dft ( x_t , f_s , N , threshold = 1e-10 ) :
         X_m = 0j  # Inicjalizacja składowej częstotliwości jako liczby zespolonej
         for n in range ( N ) :
             X_m += x_t[n] * np.exp ( -2j * np.pi * m * n / N )
+            
         # Ustawienie zerowej amplitudy i fazy dla małych wartości
         X_m /= N  # Skalowanie przez liczbę próbek
         if np.abs ( X_m ) < threshold:

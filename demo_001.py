@@ -15,7 +15,7 @@ np.set_printoptions ( formatter = { "float_kind" : lambda x : "%g" % x } )
 
 timeit_tries = 1000
 
-N = 256
+N = 8
 f_s = 8000
 
 ( t , x_n ) = gen_signal.wave ( 1 , 10 , 2000.0 , f_s , N , 1/2*np.pi , 10 , 1 ) #fi phase = 1 / 3 * np.pi #phase shift in radians
