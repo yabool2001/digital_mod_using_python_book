@@ -21,17 +21,17 @@ def wave ( sin , a , f , f_s , N , p_o , osr , depict ) :
     print ( f"{t=}" )
 
     if ( sin ) :
-        x_n = np.sin ( a * np.pi * f * t + p_o )
+        x_n = a * np.sin ( 2 * np.pi * f * t + p_o )
     else :
-        x_n = np.cos ( a * np.pi * f * t + p_o )
+        x_n = a * np.cos ( 2 * np.pi * f * t + p_o )
     
     if ( depict ) :
         import matplotlib.pyplot as plt
         l = np.linspace ( 0 , ( N - 1 ) * t_s , num = N * osr ) # Na rysunku powinno być więcej punktów niż do analizy
         if ( sin ) :
-            x_t = np.sin ( a * np.pi * f * l + p_o )
+            x_t = a * np.sin ( 2 * np.pi * f * l + p_o )
         else :
-            x_t = np.cos ( a * np.pi * f * l + p_o )
+            x_t = a * np.cos ( 2 * np.pi * f * l + p_o )
         plt.figure ( figsize = ( 10 , 5 ) )
         plt.plot ( l , x_t , label = 'x_t amplitude' )
         plt.scatter ( t , x_n , color = 'red' , marker = '*' , s = 100 , label = 'Samples (t)' )

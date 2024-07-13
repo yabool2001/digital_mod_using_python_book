@@ -15,17 +15,21 @@ def fft ( x_n , f_s , N , threshold = 1e-10 ) :
     import numpy as np
     import matplotlib.pyplot as plt
 
-    X_m_mag = fft ( x_n , N )
+    X_m = fft ( x_n , N )
+
+    X_m_mag = np.abs ( X_m ) / N
     X_m_mag[np.abs ( X_m_mag ) < threshold] = 0
-    print ( f"{X_m_mag=}")
+    #print ( f"{X_m_mag=}")
 
     X_m_phi = np.angle ( X_m_mag , deg = True )
     X_m_phi[np.abs ( X_m_phi ) < threshold] = 0
-    print ( f"{X_m_phi=}")
+    #print ( f"{X_m_phi=}")
 
     d_f = f_s / N
-    X_m_freq = np.arange ( 0 , f_s , d_f )
-    print ( f"{X_m_freq=}")
+    m_freq = np.arange ( 0 , f_s , d_f )
+    #print ( f"{m_freq=}")
+
+    return m_freq , X_m_mag , X_m_phi
 
 def dft ( x_t , f_s , N , threshold = 1e-10 ) :
     """
@@ -71,3 +75,18 @@ def dft ( x_t , f_s , N , threshold = 1e-10 ) :
         result [m] = [ X_m_freq , X_m_mag , X_m_phi ]
 
     return result
+
+def plot_dft ( m_freq , X_m_mag , X_m_phi ) :
+
+    import matplotlib.pyplot as plt
+
+    plt.figure ( figsize = ( 10 , 5 ) )
+    plt.subplot ( 211 )
+    plt.stem ( m_freq , X_m_mag , 'b' ,  markerfmt = " " , basefmt = "-b" )
+    plt.ylabel ( 'Magnitude of X(m) |X(freq)|' )
+
+    plt.subplot ( 212 )
+    plt.stem ( m_freq , X_m_phi , 'b', markerfmt = " ", basefmt = "-b" )
+    plt.xlabel ( 'Freq (Hz)' )
+    plt.ylabel ( 'Phase Angle of X(m) Xphi(freq)' )
+    plt.show ()
