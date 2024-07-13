@@ -1,5 +1,36 @@
+def fft ( x_n , f_s , N , threshold = 1e-10 ) :
+    """
+    Parameters:
+    x_n         complex-valued time domain signal values as tupe
+    f_s         sampling frequency
+    N           the number of samples of the input sequence and the number of frequency points in the FFT output.
+    Returns:
+
+    Notes:
+    1. The FFT length should be sufficient to cover the entire length of the input signal.
+    2. If a signal is composed of more samples than the value specified by N, only the first N samples of this signal will be used to calculate the FFT. Any samples beyond this range will be ignored.
+    """
+
+    from scipy.fftpack import fft
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    X_m_mag = fft ( x_n , N )
+    X_m_mag[np.abs ( X_m_mag ) < threshold] = 0
+    print ( f"{X_m_mag=}")
+
+    X_m_phi = np.angle ( X_m_mag , deg = True )
+    X_m_phi[np.abs ( X_m_phi ) < threshold] = 0
+    print ( f"{X_m_phi=}")
+
+    d_f = f_s / N
+    X_m_freq = np.arange ( 0 , f_s , d_f )
+    print ( f"{X_m_freq=}")
+
 def dft ( x_t , f_s , N , threshold = 1e-10 ) :
     """
+    Problem: funkcja generuje tylko amplitudę 1.
+    Function generates positive frequency components with the Nyquist frequency.
     A general rectangular function x ( n ) can be defined as N samples containing K unity-valued samples.
     Parameters:
     x_t         signal values as tupe
