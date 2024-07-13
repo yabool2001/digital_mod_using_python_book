@@ -1,4 +1,4 @@
-def fft ( x_n , f_s , N , threshold = 1e-10 ) :
+def fft ( x_n , f_s , N , threshold = 1e-10 , verbose = False ) :
     """
     Parameters:
     x_n         complex-valued time domain signal values as tupe
@@ -20,24 +20,24 @@ def fft ( x_n , f_s , N , threshold = 1e-10 ) :
     complex_ths = threshold
 
     X_m = fft ( x_n , N )
-    print ( f"{X_m=}")
+    if ( verbose ) : print ( f"{X_m=}")
     X_m.real[np.abs ( X_m.real ) < threshold] = 0
     X_m.imag[np.abs ( X_m.imag ) < threshold] = 0
-    print ( f"{X_m=}")
+    if ( verbose ) : print ( f"{X_m=}")
 
     X_m_mag = np.abs ( X_m ) / N
-    print ( f"{X_m_mag=}")
+    if ( verbose ) : print ( f"{X_m_mag=}")
 
     X_m_phi = np.angle ( X_m , deg = True )
-    print ( f"{X_m_phi=}")
+    if ( verbose ) : print ( f"{X_m_phi=}")
 
     d_f = f_s / N
     m_freq = np.arange ( 0 , f_s , d_f )
-    print ( f"{m_freq=}")
+    if ( verbose ) : print ( f"{m_freq=}")
 
     return m_freq , X_m_mag , X_m_phi
 
-def dft ( x_t , f_s , N , threshold = 1e-10 ) :
+def dft ( x_t , f_s , N , threshold = 1.0e-10 , verbose = False ) :
     """
     Problem: funkcja generuje tylko amplitudę 1.
     Function generates positive frequency components with the Nyquist frequency.
@@ -52,7 +52,6 @@ def dft ( x_t , f_s , N , threshold = 1e-10 ) :
     Notes:
     
     """
-
     import numpy as np
     # Historia utworzenia funkcji https://chatgpt.com/share/e7a46f16-564f-4490-b71f-466276daa8bb
     # x_t: próbki sygnału w dziedzinie czasu
@@ -67,19 +66,19 @@ def dft ( x_t , f_s , N , threshold = 1e-10 ) :
         X_m = 0j  # Inicjalizacja składowej częstotliwości jako liczby zespolonej
         for n in range ( N ) :
             X_m += x_t[n] * np.exp ( -2j * np.pi * m * n / N )
-            
+            if ( verbose ) : print ( f"{X_m=} {X_m.real=} {X_m.imag=} {np.abs(X_m.real)=} {np.abs(X_m.imag)=}") 
+            real_part = X_m.real if np.abs ( X_m.real ) >= threshold else 0.0
+            imag_part = X_m.imag if np.abs ( X_m.imag ) >= threshold else 0.0
+            X_m = complex ( real_part , imag_part )
         # Ustawienie zerowej amplitudy i fazy dla małych wartości
         X_m /= N  # Skalowanie przez liczbę próbek
-        if np.abs ( X_m ) < threshold:
-            X_m_mag = 0
-            X_m_phi = 0  # Faza zerowa dla bardzo małych wartości amplitudy
+        if m == 0 or m == N//2:  # Nie podwajamy dla składnika DC i Nyquista
+            X_m_mag = np.abs(X_m)
         else:
-            if m == 0 or m == N//2:  # Nie podwajamy dla składnika DC i Nyquista
-                X_m_mag = np.abs(X_m)
-            else:
-                X_m_mag = 2 * np.abs(X_m)  # Podwajanie amplitudy dla odpowiedzi częstotliwości
-            X_m_phi = np.angle ( X_m , deg = True )  # Obliczanie fazy
+            X_m_mag = 2 * np.abs(X_m)  # Podwajanie amplitudy dla odpowiedzi częstotliwości
+        X_m_phi = np.angle ( X_m , deg = True )  # Obliczanie fazy
         result [m] = [ X_m_freq , X_m_mag , X_m_phi ]
+        if ( verbose ) : print ( f"{result[m]=}") 
 
     return result
 

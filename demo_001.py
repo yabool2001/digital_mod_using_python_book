@@ -27,10 +27,10 @@ plot_signal ( t , x_n )
 
 #czas = timeit.timeit ( 'ft.dft ( x_n , f_s , N )' , setup = 'import dsp.ft as ft ; from __main__ import x_n , f_s , N' , number = timeit_tries )
 #print ( f"{czas=}")
-X_m = ft.dft ( x_n , f_s , N )
+X_m = ft.dft ( x_n , f_s , N , verbose = False )
 ft.plot_dft ( X_m[:, 0] , X_m[:, 1] , X_m[:, 2] )
 
-( m_freq , X_m_mag , X_m_phi ) = ft.fft ( x_n , f_s , N )
+( m_freq , X_m_mag , X_m_phi ) = ft.fft ( x_n , f_s , N , verbose = False )
 ft.plot_dft ( m_freq , X_m_mag , X_m_phi )
 #czas = timeit.timeit ( 'ft.fft ( x_n , f_s , N )' , setup = 'import dsp.ft as ft ; from __main__ import x_n , f_s , N' , number = timeit_tries )
 #print ( f"{czas=}")
