@@ -18,12 +18,12 @@ timeit_tries = 1000
 N = 8
 f_s = 8000
 
-( t , x_n ) = gen_signal.wave ( 1 , 10 , 2000.0 , f_s , N , 1/2*np.pi , 10 , 1 ) #fi phase = 1 / 3 * np.pi #phase shift in radians
-plot_signal ( t , x_n )
-# ( t , x_n ) = gen_signal.rect_pulse ( 1 , f_s , N , 3 , 0 , 0 , 0 ) #fi phase = 1 / 3 * np.pi #phase shift in radians
-# plot_signal ( t , x_t )
-# ( t , x_n ) = gen_signal.chirp ( 1 , 1500 , 1000 , 10 , 50 , 0 , 'linear' , True , 1 ) #fi phase = 1 / 3 * np.pi #phase shift in radians
+# ( t , x_n ) = gen_signal.wave ( 1 , 10 , 2000.0 , f_s , N , 1/2*np.pi , 10 , 1 ) #fi phase = 1 / 3 * np.pi #phase shift in radians
 # plot_signal ( t , x_n )
+# ( t , x_n ) = gen_signal.rect_pulse ( 10 , f_s , N , 3 , 0 , 0 , 0 ) #fi phase = 1 / 3 * np.pi #phase shift in radians
+# plot_signal ( t , x_n )
+( t , x_n ) = gen_signal.chirp ( 1 , f_s , N , 1000 , 1000 , 0 , 'linear' , True , 1 ) #fi phase = 1 / 3 * np.pi #phase shift in radians
+plot_signal ( t , x_n )
 
 #czas = timeit.timeit ( 'ft.dft ( x_n , f_s , N )' , setup = 'import dsp.ft as ft ; from __main__ import x_n , f_s , N' , number = timeit_tries )
 #print ( f"{czas=}")
