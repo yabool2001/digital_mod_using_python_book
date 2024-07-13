@@ -19,15 +19,15 @@ def fft ( x_n , f_s , N , threshold = 1e-10 ) :
 
     X_m_mag = np.abs ( X_m ) / N
     X_m_mag[np.abs ( X_m_mag ) < threshold] = 0
-    #print ( f"{X_m_mag=}")
+    print ( f"{X_m_mag=}")
 
     X_m_phi = np.angle ( X_m_mag , deg = True )
     X_m_phi[np.abs ( X_m_phi ) < threshold] = 0
-    #print ( f"{X_m_phi=}")
+    print ( f"{X_m_phi=}")
 
     d_f = f_s / N
     m_freq = np.arange ( 0 , f_s , d_f )
-    #print ( f"{m_freq=}")
+    print ( f"{m_freq=}")
 
     return m_freq , X_m_mag , X_m_phi
 
