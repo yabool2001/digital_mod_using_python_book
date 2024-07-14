@@ -24,15 +24,7 @@ plt.legend ()
 plt.grid ( True )
 plt.show ()
 
-X_m = ft.dft ( x_n , f_s , N , verbose = True )
-plot_signal.plot_dft ( X_m[:, 0] , X_m[:, 1] , X_m[:, 2] )
-
 ( m_freq , X_m_mag , X_m_phi ) = ft.fft ( x_n , f_s , N , verbose = True )
-plot_signal.plot_dft ( m_freq , X_m_mag , X_m_phi )
-#czas = timeit.timeit ( 'ft.fft ( x_n , f_s , N )' , setup = 'import dsp.ft as ft ; from __main__ import x_n , f_s , N' , number = timeit_tries )
-#print ( f"{czas=}")
-
-energy.power_spectrum ( x_n , N , verbose = True )
 
 ( m_shift_freq , X_m_shift_mag , X_m_shift_phi ) = ft.fft_shift ( x_n , f_s , N , verbose = True )
 plot_signal.plot_dft ( m_shift_freq , X_m_shift_mag , X_m_shift_phi )
