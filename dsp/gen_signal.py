@@ -180,12 +180,13 @@ def example_1_dft_mod ( f_s , N , osr , verbose = False ) :
     t = np.arange ( 0 , N * t_s , t_s ) # Sampling points generation
     if verbose : print ( f"{t=}" )
 
-    x_n = np.sin ( 2 * np.pi * 1000 * t - 1/2*np.pi ) + np.sin ( 2 * np.pi * 2000 * t + 3/2*np.pi ) + np.sin ( 2 * np.pi * 3000 * t )
-    
+    # x_n = np.sin ( 2 * np.pi * 1000 * t - 1/2*np.pi ) + np.sin ( 2 * np.pi * 2000 * t + 3/2*np.pi ) + np.sin ( 2 * np.pi * 3000 * t )
+    x_n = np.cos ( 2 * np.pi * 1000 * t + np.pi )
+
     if verbose :
         import matplotlib.pyplot as plt
         l = np.linspace ( 0 , ( N - 1 ) * t_s , num = N * osr ) # Na rysunku powinno być więcej punktów niż do analizy
-        x_l = np.sin ( 2 * np.pi * 1000 * l -1/2*np.pi ) + np.sin ( 2 * np.pi * 2000 * l + 3/2*np.pi ) + np.sin ( 2 * np.pi * 3000 * l )
+        x_l = np.cos ( 2 * np.pi * 1000 * l + np.pi )
         plt.figure ( figsize = ( 10 , 5 ) )
         plt.plot ( l , x_l , label = 'x_t amplitude' )
         plt.scatter ( t , x_n , color = 'red' , marker = '*' , s = 100 , label = 'Samples ( l = N * osr )' )
