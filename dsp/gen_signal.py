@@ -1,4 +1,4 @@
-def wave ( sin , a , f , f_s , N , p_o , osr , depict ) :
+def wave ( sin , a , f , f_s , N , p_o , osr , verbose = False ) :
     """
     Generate sine wave signal with the following parameters
     Parameters:
@@ -9,7 +9,7 @@ def wave ( sin , a , f , f_s , N , p_o , osr , depict ) :
     N           the number of samples of the input sequence and the number of frequency points in the DFT output.
     p_o         desired phase offset in radians
     osr         oversampling rate (integer) used for plot
-    depict      plot the signal
+    verbose     plot the signal
     Returns:
     ( n , x_n ) time base (n) and the signal x(n) as tuple
     """
@@ -25,7 +25,7 @@ def wave ( sin , a , f , f_s , N , p_o , osr , depict ) :
     else :
         x_n = a * np.cos ( 2 * np.pi * f * t + p_o )
     
-    if ( depict ) :
+    if verbose :
         import matplotlib.pyplot as plt
         l = np.linspace ( 0 , ( N - 1 ) * t_s , num = N * osr ) # Na rysunku powinno być więcej punktów niż do analizy
         if ( sin ) :
@@ -44,7 +44,7 @@ def wave ( sin , a , f , f_s , N , p_o , osr , depict ) :
 
     return ( t , x_n ) # return time base and signal as tuple
 
-def rect_pulse ( a , f_s , N , K , s , sym , depict ) :
+def rect_pulse ( a , f_s , N , K , s , sym , verbose = False ) :
     """
     A general rectangular function x ( n ) can be defined as N samples containing K unity-valued samples.
     Parameters:
@@ -79,7 +79,7 @@ def rect_pulse ( a , f_s , N , K , s , sym , depict ) :
         if s < 0 : s = 0
         x_t[s:e] = a
 
-    if ( depict ) :
+    if verbose :
         import matplotlib.pyplot as plt
         plt.figure ( figsize = ( 10 , 5 ) )
         plt.scatter ( t , x_t , color = 'red' , marker = '*' , s = 100 , label = 'Samples (n)' )
@@ -120,7 +120,7 @@ def chirp ( a , f_s , N , f_0 , f_1 , p_o , m , v_z , depict ) :
     # x_t = chirp ( t , f_0 , t_1 , f_1 , m , p_o )
     # t =np.arange(start = 0, stop = 1,step = 1/500)
     x_t = chirp ( t , f_0 , t1 = t_1 , f1 = f_1 , phi = p_o , method = m , vertex_zero = v_z )
-    if depict :
+    if verbose :
         import matplotlib.pyplot as plt
         plt.plot ( t , x_t )
         plt.show ()

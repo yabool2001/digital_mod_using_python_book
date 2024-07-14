@@ -1,3 +1,39 @@
+def fft_shift ( x_n , f_s , N , threshold = 1e-10 , verbose = False ) :
+    """
+    Parameters:
+    x_n         complex-valued time domain signal values as tupe
+    f_s         sampling frequency
+    N           the number of samples of the input sequence and the number of frequency points in the FFT output.
+    Returns:
+
+    Notes:
+    1. The FFT length should be sufficient to cover the entire length of the input signal.
+    2. If a signal is composed of more samples than the value specified by N, only the first N samples of this signal will be used to calculate the FFT. Any samples beyond this range will be ignored.
+    """
+
+    from scipy.fftpack import fft , fftshift
+    import numpy as np
+
+    X_m = fft ( x_n , N )
+    if ( verbose ) : print ( f"{X_m=}")
+    X_m.real[np.abs ( X_m.real ) < threshold] = 0
+    X_m.imag[np.abs ( X_m.imag ) < threshold] = 0
+    if ( verbose ) : print ( f"{X_m=}")
+
+    X_m_shift = fftshift ( X_m )
+
+    X_m_shift_mag = np.abs ( X_m_shift ) / N
+    if ( verbose ) : print ( f"{X_m_shift_mag=}")
+
+    X_m_shift_phi = np.angle ( X_m_shift , deg = True )
+    if ( verbose ) : print ( f"{X_m_shift_phi=}")
+
+    d_f = f_s / N
+    m_shift_freq = np.arange ( - N // 2 , N // 2 ) * d_f
+    if ( verbose ) : print ( f"{m_shift_freq=}")
+
+    return m_shift_freq , X_m_shift_mag , X_m_shift_phi
+
 def fft ( x_n , f_s , N , threshold = 1e-10 , verbose = False ) :
     """
     Parameters:
@@ -13,11 +49,6 @@ def fft ( x_n , f_s , N , threshold = 1e-10 , verbose = False ) :
 
     from scipy.fftpack import fft
     import numpy as np
-    import matplotlib.pyplot as plt
-
-    np.set_printoptions ( formatter = { "float_kind" : lambda x : "%g" % x } )
-
-    complex_ths = threshold
 
     X_m = fft ( x_n , N )
     if ( verbose ) : print ( f"{X_m=}")
