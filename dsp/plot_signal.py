@@ -17,3 +17,18 @@ def plot_signal ( n , x_n ) :
     plt.legend ()
     plt.grid ( True )
     plt.show ()
+
+def plot_dft ( m_freq , X_m_mag , X_m_phi ) :
+
+    import matplotlib.pyplot as plt
+
+    plt.figure ( figsize = ( 10 , 5 ) )
+    plt.subplot ( 211 )
+    plt.stem ( m_freq , X_m_mag , 'b' ,  markerfmt = " " , basefmt = "-b" )
+    plt.ylabel ( 'Magnitude of X(m) |X(freq)|' )
+
+    plt.subplot ( 212 )
+    plt.stem ( m_freq , X_m_phi , 'b', markerfmt = " ", basefmt = "-b" )
+    plt.xlabel ( 'Freq (Hz)' )
+    plt.ylabel ( 'Phase Angle of X(m) Xphi(freq)' )
+    plt.show ()

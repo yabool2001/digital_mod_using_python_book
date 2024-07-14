@@ -14,6 +14,8 @@ def fft_shift ( x_n , f_s , N , threshold = 1e-10 , verbose = False ) :
     from scipy.fftpack import fft , fftshift
     import numpy as np
 
+    print ( " fft_shift start" )
+
     X_m = fft ( x_n , N )
     if ( verbose ) : print ( f"{X_m=}")
     X_m.real[np.abs ( X_m.real ) < threshold] = 0
@@ -21,16 +23,21 @@ def fft_shift ( x_n , f_s , N , threshold = 1e-10 , verbose = False ) :
     if ( verbose ) : print ( f"{X_m=}")
 
     X_m_shift = fftshift ( X_m )
+    if ( verbose ) : print ( f"{X_m_shift=}")
+    d_f = f_s / N
+    m_shift_freq = np.arange ( - N // 2 , N // 2 ) * d_f
+    if ( verbose ) : print ( f"{m_shift_freq=}")
 
     X_m_shift_mag = np.abs ( X_m_shift ) / N
     if ( verbose ) : print ( f"{X_m_shift_mag=}")
 
-    X_m_shift_phi = np.angle ( X_m_shift , deg = True )
+    #X_m_shift_phi = np.angle ( X_m_shift , deg = True )
+    X_m_shift_phi = np.arctan2 ( np.imag(X_m_shift),np.real(X_m_shift))*180/np.pi # phase information
     if ( verbose ) : print ( f"{X_m_shift_phi=}")
 
-    d_f = f_s / N
-    m_shift_freq = np.arange ( - N // 2 , N // 2 ) * d_f
-    if ( verbose ) : print ( f"{m_shift_freq=}")
+    
+
+    print ( " fft_shift finish" )
 
     return m_shift_freq , X_m_shift_mag , X_m_shift_phi
 
@@ -97,7 +104,6 @@ def dft ( x_t , f_s , N , threshold = 1.0e-10 , verbose = False ) :
         X_m = 0j  # Inicjalizacja składowej częstotliwości jako liczby zespolonej
         for n in range ( N ) :
             X_m += x_t[n] * np.exp ( -2j * np.pi * m * n / N )
-            if ( verbose ) : print ( f"{X_m=} {X_m.real=} {X_m.imag=} {np.abs(X_m.real)=} {np.abs(X_m.imag)=}") 
             real_part = X_m.real if np.abs ( X_m.real ) >= threshold else 0.0
             imag_part = X_m.imag if np.abs ( X_m.imag ) >= threshold else 0.0
             X_m = complex ( real_part , imag_part )
@@ -112,18 +118,3 @@ def dft ( x_t , f_s , N , threshold = 1.0e-10 , verbose = False ) :
         if ( verbose ) : print ( f"{result[m]=}") 
 
     return result
-
-def plot_dft ( m_freq , X_m_mag , X_m_phi ) :
-
-    import matplotlib.pyplot as plt
-
-    plt.figure ( figsize = ( 10 , 5 ) )
-    plt.subplot ( 211 )
-    plt.stem ( m_freq , X_m_mag , 'b' ,  markerfmt = " " , basefmt = "-b" )
-    plt.ylabel ( 'Magnitude of X(m) |X(freq)|' )
-
-    plt.subplot ( 212 )
-    plt.stem ( m_freq , X_m_phi , 'b', markerfmt = " ", basefmt = "-b" )
-    plt.xlabel ( 'Freq (Hz)' )
-    plt.ylabel ( 'Phase Angle of X(m) Xphi(freq)' )
-    plt.show ()
